@@ -48,16 +48,35 @@ def analyze_numbers(numbers):
 
     analysis = {}
 
-    # TODO: Calculate count
-    # TODO: Calculate sum
-    # TODO: Calculate average
-    # TODO: Find minimum
-    # TODO: Find maximum
-    # TODO: Count even numbers (hint: use modulo operator)
-    # TODO: Count odd numbers
+    # Count
+    analysis["count"] = len(numbers)
+
+    # Sum
+    analysis["sum"] = sum(numbers)
+
+    # Average
+    analysis["average"] = analysis["sum"] / analysis["count"]
+
+    # Minimum
+    analysis["minimum"] = min(numbers)
+
+    # Maximum
+    analysis["maximum"] = max(numbers)
+
+    # Even and Odd counts
+    even_count = 0
+    odd_count = 0
+    for num in numbers:
+        if isinstance(num, int) or num.is_integer(): 
+            if int(num) % 2 == 0:
+                even_count += 1
+            else:
+                odd_count += 1
+
+    analysis["even_count"] = even_count
+    analysis["odd_count"] = odd_count
 
     return analysis
-
 
 def display_analysis(analysis):
     """
@@ -78,7 +97,15 @@ def display_analysis(analysis):
     # Sum: 25
     # Average: 5.00
     # etc.
-    pass
+        print("\nAnalysis Results:")
+    print("-" * 20)
+    print(f"Count: {analysis['count']}")
+    print(f"Sum: {analysis['sum']}")
+    print(f"Average: {analysis['average']:.2f}")
+    print(f"Minimum: {analysis['minimum']}")
+    print(f"Maximum: {analysis['maximum']}")
+    print(f"Even numbers: {analysis['even_count']}")
+    print(f"Odd numbers: {analysis['odd_count']}")
 
 
 def main():
