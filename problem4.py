@@ -32,7 +32,14 @@ def count_words(filename):
     """
     # TODO: Open file and count words
     # Hint: Use split() to separate words
-    pass
+    try:
+        with open(filename, 'r') as f:
+            text = f.read()
+            words = text.split()  
+            return len(words)
+        except FileNotFoundError:
+            print(f"File {filename} not found.")
+            return 0
 
 
 def count_lines(filename):
@@ -46,7 +53,13 @@ def count_lines(filename):
         int: Total number of lines
     """
     # TODO: Open file and count lines
-    pass
+    try:
+        with open(filename, 'r') as f:
+            lines = f.readlines()
+            return len(lines)
+    except FileNotFoundError:
+        print(f"File {filename} not found.")
+        return 0
 
 
 def count_characters(filename, include_spaces=True):
@@ -62,7 +75,16 @@ def count_characters(filename, include_spaces=True):
     """
     # TODO: Open file and count characters
     # If include_spaces is False, don't count spaces
-    pass
+    try:
+        with open(filename, 'r') as f:
+            text = f.read()
+            if include_spaces:
+                return len(text)
+            else:
+                return len(text.replace(" ", "").replace("\n", "").replace("\t", ""))  
+    except FileNotFoundError:
+        print(f"File {filename} not found.")
+        return 0
 
 
 def find_longest_word(filename):
