@@ -14,7 +14,8 @@ def create_sample_file(filename="sample.txt"):
 It is widely used in web development, data science, and automation.
 Python's simple syntax makes it great for beginners.
 Many companies use Python for their projects."""
-
+    
+# Open the file in write mode ('w') and write the content
     with open(filename, 'w') as f:
         f.write(content)
     print(f"Created {filename}")
@@ -33,11 +34,11 @@ def count_words(filename):
     # TODO: Open file and count words
     # Hint: Use split() to separate words
     try:
-        with open(filename, 'r') as f:
-            text = f.read()
-            words = text.split()  
-            return len(words)
-        except FileNotFoundError:
+        with open(filename, 'r') as f:      #open file in read mode
+            text = f.read()                 #read entire content 
+            words = text.split()            #split text by whitespace = list
+            return len(words)               #return the numbers of words 
+    except FileNotFoundError:               #handle missing file 
             print(f"File {filename} not found.")
             return 0
 
@@ -54,10 +55,10 @@ def count_lines(filename):
     """
     # TODO: Open file and count lines
     try:
-        with open(filename, 'r') as f:
-            lines = f.readlines()
-            return len(lines)
-    except FileNotFoundError:
+        with open(filename, 'r') as f:      #open file in read mode
+            lines = f.readlines()           #read all lines into a list
+            return len(lines)               # return number of lines 
+    except FileNotFoundError:               # handle missing file 
         print(f"File {filename} not found.")
         return 0
 
@@ -76,16 +77,15 @@ def count_characters(filename, include_spaces=True):
     # TODO: Open file and count characters
     # If include_spaces is False, don't count spaces
     try:
-        with open(filename, 'r') as f:
-            text = f.read()
-            if include_spaces:
+        with open(filename, 'r') as f:      # open file in read mode
+            text = f.read()                 # read entire content
+            if include_spaces:              # count all characters (also spaces)
                 return len(text)
-            else:
+            else:                           #removes spaces, newlines, tabs 
                 return len(text.replace(" ", "").replace("\n", "").replace("\t", ""))  
     except FileNotFoundError:
         print(f"File {filename} not found.")
         return 0
-
 
 def find_longest_word(filename):
     """
@@ -97,9 +97,25 @@ def find_longest_word(filename):
     Returns:
         str: The longest word found
     """
-    # TODO: Find the longest word
-    # Hint: You might need to remove punctuation
-    pass
+    try:
+        with open(filename, 'r') as f:          # open file
+            text = f.read()                     # read all content
+            words = text.split()                # split text into words
+
+            # Initialize longest word
+            longest_word = ""
+
+            # Loop through each word
+            for word in words:
+                # Compare lengths, keep the longest
+                if len(word) > len(longest_word):
+                    longest_word = word
+
+            return longest_word  # return the longest word
+
+    except FileNotFoundError:                   # handle missing file
+        print(f"File {filename} not found.")
+        return None
 
 
 def word_frequency(filename):
@@ -115,15 +131,31 @@ def word_frequency(filename):
     """
     import string
 
-    frequency = {}
+    frequency = {}  # empty dictionary to store word counts
 
-    # TODO: Open file
-    # TODO: Read all words
-    # TODO: Convert to lowercase
-    # TODO: Remove punctuation (use string.punctuation)
-    # TODO: Count frequency of each word
+    try:
+        with open(filename, 'r') as f:               # open the file
+            text = f.read()                          # read entire content
+            text = text.lower()                      # convert text to lowercase
 
-    return frequency
+            # Remove punctuation from the text
+            translator = str.maketrans('', '', string.punctuation)
+            text = text.translate(translator)
+
+            words = text.split()                     # split into list of words
+
+            # Count frequency of each word
+            for word in words:
+                if word in frequency:                # if word already exists, add 1
+                    frequency[word] += 1
+                else:                                # if first time, set count to 1
+                    frequency[word] = 1
+
+    except FileNotFoundError:                        # handle missing file
+        print(f"File {filename} not found.")
+        return {}
+
+    return frequency  # return dictionary of word frequencies
 
 
 def analyze_file(filename):
